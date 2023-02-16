@@ -1,7 +1,7 @@
 #lang racket
 
 (define (hello name)
-  (print 'Hello,' name)
+  (print "Hello, "
   (print name))
 
 
