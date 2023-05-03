@@ -1,0 +1,67 @@
+% Prolouge: The Quest for Truth
+
+% syntax for lists: more rules (like a funciton but no return - leave an unbount variable for a "solution")
+% take in list & unbound variable as params. list must be >= 1
+% findMin([Min], Min).
+
+% recursive call
+% ([H|T], H) :- findMin(T, MT), H < MT.
+% findmin([H|T], MT) :- findMin(T, MT), H >= MT.
+
+findSum([], 0).
+findSum([H|T], Sum) :- findSum(T, Tsum), Sum is H + Tsum.
+
+find_min([Min], Min).
+
+find_min([X,Y|Rest], Min) :- X =< Y, find_min([X|Rest], Min).
+find_min([X,Y|Rest], Min) :- X > Y, find_min([Y|Rest], Min).
+
+
+
+% Part 2: Helper Functions
+% 
+% mode: most ocurring elememt
+% need: countElem
+% 
+% base case: list = empty = 0
+% function(our list, the element - anonymous variable, the count of element appearing)
+countElem([], _, 0).
+
+countElem([H|T], H, Hcount) :- countElem(T, H, THcount), Hcount is 1 + THcount.
+countElem([H|T], E, Hcount) :- countElem(T, E, Hcount), H \= E.
+
+
+% base case: list[elements[]], [unique elements], count_of_sub-elements_per_element[] ]
+countElems([], [], []).
+countElems([H], [H], [1]).
+
+% recursion: 
+countElems([H|T], [H|TResult], [Hcount|_]) :- 
+    \+member(H, TResult), countElem(T, H, THcount), Hcount is 1+THcount.
+countElems([H|T], R1, R2) :- 
+    member(H, R1), countElems(T, R1, R2).
+
+
+findMode(L, M) :- 
+    list_to_set(L, UniqElms), countElms(L, UniqElms, UniqElmsCount), findMax(UniqElms, UniqElmsCount, M).
+
+
+% median: average of elements
+
+% median([Lis], Avg) :- findSum(Lis, Sum), countElem(Lis, E, Hcouont), Avg is Sum / Hcount.
+    
+    
+    
+    
+    
+% Re-create append
+% base case: L1 = empy "first" list, L2 = second list , L3 = merged/appended list
+myAppend([], L2, L2).
+myAppend([H|T], L2, L3) :- myAppend(T, L2, L4), L3 = [H|L4].
+myAppend([H|T], L2, [H|L3]) :- myAppend(T, L2, L3).
+    
+    
+    
+    
+    
+    
